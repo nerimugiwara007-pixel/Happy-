@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Feliz Aniversário, Minha Irmã!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ffdde1 100%);
+            font-family: 'Segoe UI', cursive, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            transition: background 1s ease;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 650px;
+            padding: 20px;
+        }
+
+        /* Tela inicial do presente */
+        .gift-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .gift-title {
+            font-size: 2.2rem;
+            color: #d63384;
+            margin-bottom: 10px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        .gift-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .gift-box {
+            position: relative;
+            width: 180px;
+            height: 140px;
+            background: linear-gradient(135deg, #d63384, #e85a99);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(214, 51, 132, 0.3);
+        }
+
+        .gift-box:hover {
+            transform: translateY(-10px);
+        }
+
+        .gift-lid {
+            position: absolute;
+            top: -25px;
+            left: -10px;
+            width: 200px;
+            height: 35px;
+            background: linear-gradient(135deg, #e85a99, #ff8fb1);
+            border-radius: 8px 8px 0 0;
+            z-index: 2;
+            transition: transform 0.5s ease;
+        }
+
+        .gift-ribbon {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 100%;
+            background: #fff;
+            z-index: 3;
+        }
+
+        .gift-ribbon::before,
+        .gift-ribbon::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            width: 45px;
+            height: 25px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        .gift-ribbon::before {
+            left: -35px;
+            transform: rotate(-15deg);
+        }
+
+        .gift-ribbon::after {
+            right: -35px;
+            transform: rotate(15deg);
+        }
+
+        .hint {
+            margin-top: 25px;
+            color: #d63384;
+            font-weight: bold;
+            font-size: 1rem;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Classe para abrir o presente */
+        .opened .gift-lid {
+            transform: translateY(-40px) rotate(-10deg);
+        }
+
+        .opened .gift-box {
+            transform: translateY(20px);
+        }
+
+        /* Tela da mensagem */
+        .message-screen {
+            display: none;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .message-screen.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #d63384;
+            margin: 20px 0;
+            animation: bounce 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        .cake {
+            font-size: 5rem;
+            margin: 20px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .card {
+            background: white;
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 10px 40px rgba(214, 51, 132, 0.2);
+            position: relative;
+            z-index: 1;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            font-size: 1.05rem;
+            color: #444;
+            line-height: 1.8;
+            text-align: left;
+        }
+
+        .phrases {
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+            border-radius: 18px;
+        }
+
+        .phrase-item {
+            padding: 10px 0;
+            font-weight: 500;
+            color: #b82b72;
+            border-bottom: 1px dashed #f8c8dc;
+        }
+
+        .phrase-item:last-child {
+            border-bottom: none;
+        }
+
+        .signature {
+            margin-top: 30px;
+            font-size: 1.3rem;
+            color: #d63384;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #d63384, #e85a99);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 25px rgba(214, 51, 132, 0.4);
+        }
+
+        /* Elementos de fundo */
+        .heart {
+            position: fixed;
+            font-size: 20px;
+            animation: fall linear forwards;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+            animation: confettiFall 5s ease-in-out infinite;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0.5;
+            }
+        }
+
+        .sparkle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            animation: sparkle 1.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .final-hearts {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 2rem;
+            animation: heartbeat 1s ease-in-out infinite;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .message {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Tela do presente fechado -->
+        <div class="gift-screen" id="giftScreen">
+            <h2 class="gift-title">🎁 Tem um presente para você!</h2>
+            <p class="gift-subtitle">Clique no presente para abrir</p>
+
+            <div class="gift-box" id="giftBox">
+                <div class="gift-lid"></div>
+                <div class="gift-ribbon"></div>
+            </div>
+
+            <p class="hint">👆 Clique aqui!</p>
+        </div>
+
+        <!-- Tela da mensagem -->
+        <div class="message-screen" id="messageScreen">
+            <h1>✨ Feliz Aniversário! ✨</h1>
+            <div class="cake">🎂💗🎈</div>
+
+            <div class="card">
+                <div class="message">
+                    <p>Feliz aniversário, minha irmã de outra mãe! 🎂💗</p>
+                    <br>
+                    <p>Hoje agradeço a Deus por você existir e por ter cruzado meu caminho. Nossa amizade é um dos maiores presentes da minha vida, obrigada por cada risada, cada conversa, cada momento compartilhado. Seja nas fofocas, nos desabafos ou nas crises engraçadas, saber que você está comigo faz tudo mais leve.</p>
+                    <br>
+                    <p>Que seu novo ano seja repleto de luz, saúde, amor e conquistas. E que a gente continue juntas, sempre. Pena que não vamos mais soltar as nossas bombas naquele mesmo lugar kkkk mas sei que cada memória vamos guardar pra sempre e rir de tudo isso por muitos anos ainda.</p>
+                    <br>
+                    <p>Quem diria, o destino sempre quis que estivéssemos juntas, desde a festa na sua casa, no IF, ser da mesma turma, nossa reconciliação nos ensaios do desfile, de terem pedido pra me afastar de você e eu ter permanecido (pois sabia que quem sempre está aqui pra me ajudar é você, uma amizade que não tinha começado agora), mesmo morando distante uma da outra sempre estamos conectadas, até porque:</p>
+
+                    <div class="phrases">
+                        <div class="phrase-item">💖 Somos como Shampoo e Condicionador → não faz sentido usar um sem o outro, sempre juntinhas!</div>
+                        <div class="phrase-item">🍮 Somos como Creme e Gelatina → uma dá leveza, a outra traz brilho, juntas somos a melhor combinação!</div>
+                        <div class="phrase-item">✨ Somos como Base e Corretivo → sempre uma apoiando a outra, para que tudo fique perfeito!</div>
+                        <div class="phrase-item">⚡ Somos como fase e neutro → sempre juntinhas, completando o circuito uma da outra!</div>
+                    </div>
+
+                    <br>
+                    <p>Tem as pessoas que tem inveja ou raiva da nossa amizade e fico feliz por isso, o que é bom incomoda algumas pessoas mesmo. E saiba que você é um dos motivos da minha felicidade, nunca vai existir disputa entre nós, pois um dos meus sonhos é te ver crescer na vida e no amor, sempre vou estar te aplaudindo de pé desde das suas pequenas às grandes conquistas. Você é uma grande mulher, sabia e inteligente, vou estar aqui pra você sempre.</p>
+                    <br>
+                    <p class="signature">Te amo demais minha vidaaa ! Feliz aniversário meu amor! ✨🎉</p>
+                </div>
+            </div>
+
+            <button class="btn" onclick="criarCorações()">💖 MANDAR MAIS CORAÇÕES 💖</button>
+        </div>
+    </div>
+
+    <div class="final-hearts" onclick="criarCorações()">💕</div>
+
+    <script>
+        const giftBox = document.getElementById('giftBox');
+        const giftScreen = document.getElementById('giftScreen');
+        const messageScreen = document.getElementById('messageScreen');
+
+        // Quando clica no presente
+        giftBox.addEventListener('click', () => {
+            giftBox.parentElement.classList.add('opened');
+
+            // Efeito de confete inicial
+            for (let i = 0; i < 100; i++) {
+                setTimeout(criarConfete, i * 20);
+            }
+
+            // Muda a cor de fundo
+            document.body.style.background = 'linear-gradient(135deg, #ffe4ec 0%, #ff8fb1 50%, #ff6b9d 100%)';
+
+            // Espera um pouco e mostra a mensagem
+            setTimeout(() => {
+                giftScreen.style.display = 'none';
+                messageScreen.classList.add('show');
+
+                // Mais confetes caindo
+                setInterval(criarConfete, 200);
+
+                // Brilhos pelo fundo
+                setInterval(criarSparkle, 300);
+            }, 800);
+        });
+
+        // Função para criar corações
+        function criarCorações() {
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const coração = document.createElement('div');
+                    coração.classList.add('heart');
+                    coração.innerHTML = ['❤️', '💕', '💗', '💖', '💘'][Math.floor(Math.random() * 5)];
+                    coração.style.left = Math.random() * 100 + 'vw';
+                    coração.style.top = '-30px';
+                    coração.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    document.body.appendChild(coração);
+                    setTimeout(() => coração.remove(), 6000);
+                }, i * 50);
+            }
+        }
+
+        // Função para criar confete
+        const cores = ['#ff6b9d', '#ffd93d', '#ff5c5c', '#6be5ff', '#c084ff', '#4ade80'];
+
+        function criarConfete() {
+            const confete = document.createElement('div');
+            confete.classList.add('confetti');
+            confete.style.left = Math.random() * 100 + 'vw';
+            confete.style.backgroundColor = cores[Math.floor(Math.random() * cores.length)];
+            confete.style.width = (Math.random() * 8 + 5) + 'px';
+            confete.style.height = confete.style.width;
+            confete.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+            confete.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(confete);
+            setTimeout(() => confete.remove(), 5000);
+        }
+
+        // Função para criar brilhos
+        function criarSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.animationDuration = (Math.random() * 1 + 0.5) + 's';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 1500);
+        }
+    </script>
+</body>
+</html>
